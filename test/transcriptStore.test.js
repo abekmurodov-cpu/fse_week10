@@ -64,6 +64,25 @@ describe("TranscriptStore", () => {
   assert.equal(store.getGrade(id, "CS360"), undefined);
   });
   
+    test("rejects a second grade for the same course", () => {
+    const id = store.addStudent("Omar");
+    store.addGrade(id, "CS360", 80);
+
+    assert.throws(
+      () => store.addGrade(id, "CS360", 90),
+      /Grade already exists for course CS360/,
+    );
+    assert.equal(store.getGrade(id, "CS360"), 80);
+  });
+
+    test("name search ignores surrounding spaces and letter case", () => {
+    const id = store.addStudent("Grace Lee");
+
+    assert.deepEqual(store.getStudentIDs("  grace lee  "), [id]);
+    assert.deepEqual(store.getStudentIDs("GRACE LEE"), [id]);
+    assert.equal(store.getTranscript(id).student.studentName, "Grace Lee");
+  });
+  
 });
 
 
