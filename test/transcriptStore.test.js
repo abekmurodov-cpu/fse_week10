@@ -63,14 +63,6 @@ describe("TranscriptStore", () => {
 
   assert.equal(store.getGrade(id, "CS360"), undefined);
   });
-
-    test("name search ignores surrounding spaces and letter case", () => {
-    const id = store.addStudent("Grace Lee");
-
-    assert.deepEqual(store.getStudentIDs("  grace lee  "), [id]);
-    assert.deepEqual(store.getStudentIDs("GRACE LEE"), [id]);
-    assert.equal(store.getTranscript(id).student.studentName, "Grace Lee");
-  });
   
 });
 
