@@ -63,6 +63,17 @@ describe("TranscriptStore", () => {
 
   assert.equal(store.getGrade(id, "CS360"), undefined);
   });
+
+    test("rejects a second grade for the same course", () => {
+    const id = store.addStudent("Omar");
+    store.addGrade(id, "CS360", 80);
+
+    assert.throws(
+      () => store.addGrade(id, "CS360", 90),
+      /Grade already exists for course CS360/,
+    );
+    assert.equal(store.getGrade(id, "CS360"), 80);
+  });
   
 });
 
